@@ -25,6 +25,28 @@ void put_kv(ListStr *num_key, ListStr *num_val, ListStr *scl_key,
 	}
 }
 
+void insertion_sort(ListStr *scl_key, ListStr *scl_val) {
+	size_t i;
+	size_t j;
+	Str temp;
+
+	i = 0;
+	while (i < scl_key->count - 1) {
+		j = i + 1;
+		while (j < scl_key->count) {
+			if (scl_key->items[j].count < scl_key->items[i].count) {
+				temp = scl_key->items[i];
+				scl_key->items[i] = scl_key->items[j];
+				scl_key->items[j] = temp;
+				temp = scl_val->items[i];
+				scl_val->items[i] = scl_val->items[j];
+				scl_val->items[j] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
 void file_parse(const char *file_path, ListStr *num_key,
 				ListStr *num_val, ListStr *scl_key, ListStr *scl_val) {
 	ListStr lines;
@@ -49,6 +71,7 @@ void file_parse(const char *file_path, ListStr *num_key,
 		i++;
 		free(line.items);
 	}
+	insertion_sort(scl_key, scl_val);
 	free(content.items);
 	list_Str_free(&lines);
 }
