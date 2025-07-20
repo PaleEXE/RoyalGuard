@@ -28,25 +28,25 @@ void put_kv(ListStr *num_key, ListStr *num_val, ListStr *scl_key,
 void insertion_sort(ListStr *scl_key, ListStr *scl_val) {
 	size_t i;
 	size_t j;
-	Str temp;
+	Str key_key;
+	Str key_val;
 
-	i = 0;
-	while (i < scl_key->count - 1) {
-		j = i + 1;
-		while (j < scl_key->count) {
-			if (scl_key->items[j].count < scl_key->items[i].count) {
-				temp = scl_key->items[i];
-				scl_key->items[i] = scl_key->items[j];
-				scl_key->items[j] = temp;
-				temp = scl_val->items[i];
-				scl_val->items[i] = scl_val->items[j];
-				scl_val->items[j] = temp;
-			}
-			j++;
+	i = 1;
+	while (i < scl_val->count) {
+		key_val = scl_val->items[i];
+		key_key = scl_key->items[i];
+		j = i;
+		while (j > 0 && scl_key->items[j - 1].count > key_key.count) {
+			scl_val->items[j] = scl_val->items[j - 1];
+			scl_key->items[j] = scl_key->items[j - 1];
+			j--;
 		}
+		scl_val->items[j] = key_val;
+		scl_key->items[j] = key_key;
 		i++;
 	}
 }
+
 void file_parse(const char *file_path, ListStr *num_key,
 				ListStr *num_val, ListStr *scl_key, ListStr *scl_val) {
 	ListStr lines;

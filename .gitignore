@@ -1,3 +1,4 @@
 cemake*/
 *.exe
 __pycache__
+.idea
